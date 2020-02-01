@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="bulma.min.css">
+    <title>Envato Purchase Verifier</title>
+    <style>
+        .wrapper {
+            width: 400px;
+            margin: auto;
+        }
+        .float_right{
+            position: relative;
+            top: 7px;
+            float: right;
+        }
+        .container{
+            padding-top: 40px;
+        }
+    </style>
+</head>
+<body>
+<div class="main">
+    <div class="wrapper">
+        <div class="container">
+            <h3 class="title is-3">Envato Purchase Verifier</h3>
+            <form id="configure">
+                <div class="field">
+                    <div class="control">
+                        <label>Show Details Card
+
+                            <input type="checkbox" id="show_details" name="show_details"
+                                   class="float_right" value="1">
+
+                        </label>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <div class="control">
+                        <label for="envato_token">Envato Token</label>
+                        <input id="envato_token" class="input" type="text" placeholder="Envato Token">
+                    </div>
+                </div>
+                <div class="buttons">
+                    <button id="update_details" class="button is-primary">Update</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+<script src="options.js"></script>
+</html>
