@@ -21,6 +21,17 @@ The extension icon is color coded and will change its color as per the status of
 ![Email](description-images/email.gif "Text selection")
 ![Ticket](description-images/ticket.gif "Text selection")
 
+## Chrome Extension Link
+We have submitted the extension to Chrome store, but till the time extension gets publised, you can use the below steps to install the extension directly.
+
+1. Download [easy-envato-master.zip](/archive/master.zip "easy-envato-master.zip")
+2. Extract Files
+3. Open Extension Manager in browser
+4. Click on Load Unpacked
+5. Select the easy-envato-master folder in which files for extension are present
+
+Thats it. 👏🏻
+
 ## How to set up?
 1. Go to https://build.envato.com/ and log in to you envato account
 2. Click on My Apps from the Menu
@@ -33,10 +44,11 @@ The extension icon is color coded and will change its color as per the status of
 Thats it. 👏🏻
 
 ## Browser Support
-Supports all major browsers with Chrome extensions support, including Edge, Opera, Google Chrome. 
+Supports all major browsers with Chrome extensions support, including Edge, Opera, Google Chrome.
 
-##  Contributing
-We welcome all contributors, from casual to regular ❤ 
+## Contributing
+We welcome all contributors, from casual to regular ❤
+
 Open an issue or a pull request to suggest changes or additions.
 
 ## License
