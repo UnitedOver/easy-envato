@@ -25,6 +25,7 @@ document.addEventListener("mouseup", function (e) {
 
     if (currentCode == selection) return;
 
+    selection = selection.replace(/(\r\n|\n|\r)/gm, "");
     currentCode = selection;
     checkPurchaseCode(currentCode);
 
@@ -164,10 +165,12 @@ function updatePurchaseInfoCard(details) {
 }
 
 function formatDate(time) {
+    var options = {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'};
+
     if (!(time instanceof Date)) {
         time = new Date(time);
     }
-    return time.toGMTString();
+    return time.toLocaleDateString("en-US", options);
 }
 
 function checkPurchaseCode(code) {
@@ -188,7 +191,7 @@ function checkPurchaseCode(code) {
 
 function processPurchaseCode(token, code) {
     var xhr = new XMLHttpRequest();
-    xhr.open('GET', 'https://api.envato.com/v3/market/author/sale?code=' + code, true);
+    xhr.open('GET', encodeURI('https://api.envato.com/v3/market/author/sale?code=' + code), true);
     xhr.setRequestHeader("Authorization", "Bearer " + token);
     xhr.onreadystatechange = function (e) {
         if (xhr.readyState === 4) {
