@@ -10,8 +10,11 @@ Using it is literally nothing but just selecting your purchase code in the brows
 The extension icon is color coded and will change its color as per the status of purchase code
 
 <img src="description-images/active.png" alt="green" width="16"> - Valid purchase code and support is **not expired**
+
 <img src="description-images/expired.png" alt="yellow" width="16"> - Valid Purchase code but support is **expired**
+
 <img src="description-images/invalid.png" alt="red" width="16"> - Invalid Purchase code
+
 
 **You can even turn of the details card from extension settings if you just want to know the status. **
 
