@@ -24,7 +24,7 @@ The extension icon is color coded and will change its color as per the status of
 ## Chrome Extension Link
 We have submitted the extension to Chrome store, but till the time extension gets publised, you can use the below steps to install the extension directly.
 
-1. Download [easy-envato-master.zip](/archive/master.zip "easy-envato-master.zip")
+1. Download [easy-envato-master.zip](https://github.com/UnitedOver/easy-envato/archive/master.zip "easy-envato-master.zip")
 2. Extract Files
 3. Open Extension Manager in browser
 4. Click on Load Unpacked
