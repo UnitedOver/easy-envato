@@ -53,10 +53,12 @@ function setIcon(icon) {
         return;
     }
     current_icon = icon;
-    chrome.runtime.sendMessage({
-        action: 'updateIcon',
-        icon: icon
-    });
+    if (typeof chrome.app.isInstalled !== 'undefined') {
+        chrome.runtime.sendMessage({
+            action: 'updateIcon',
+            icon: icon
+        });
+    }
 }
 
 document.addEventListener("mousedown", function (e) {
@@ -165,7 +167,14 @@ function updatePurchaseInfoCard(details) {
 }
 
 function formatDate(time) {
-    var options = {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'};
+    var options = {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric'
+    };
 
     if (!(time instanceof Date)) {
         time = new Date(time);
