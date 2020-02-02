@@ -16,12 +16,12 @@ The extension icon is color coded and will change its color as per the status of
 <img src="description-images/invalid.png" alt="red" width="16"> - Invalid Purchase code
 
 
-**You can even turn of the details card from extension settings if you just want to know the status. **
+**You can even turn of the details card from extension settings if you just want to know the status.**
 
 ![Email](description-images/email.gif "Text selection")
 ![Ticket](description-images/ticket.gif "Text selection")
 
-##How to set up?
+## How to set up?
 1. Go to https://build.envato.com/ and log in to you envato account
 2. Click on My Apps from the Menu
 3. Sroll to the bottom of the page and click on "Create a New Token" button
