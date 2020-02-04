@@ -13,7 +13,7 @@ document.addEventListener("mouseup", function (e) {
         return;
     }
 
-    var purchase_code_pattern = /\w{8}-\w{4}-\w{4}-\w{4}-\w{12}/;
+    var purchase_code_pattern = /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/;
 
     if (!purchase_code_pattern.test(selection)) {
         var length = selection.length;
