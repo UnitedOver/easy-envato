@@ -21,16 +21,13 @@ The extension icon is color coded and will change its color as per the status of
 ![Email](description-images/email.gif "Text selection")
 ![Ticket](description-images/ticket.gif "Text selection")
 
+## Browser Support
+Supports all major browsers with Chrome extensions support, including Edge, Opera, Google Chrome.
+
 ## Chrome Extension Link
-We have submitted the extension to Chrome store, but till the time extension gets publised, you can use the below steps to install the extension directly.
+[![Available on Chrome Web Store](description-images/ChromeWebStore_Badge_v2_340x96.png "Available on Chrome Web Store")](https://chrome.google.com/webstore/detail/easy-envato/hnchmgnmhafhgdkcinjjgkdgeehnadoe?utm_source=github&utm_medium=description&utm_campaign=github_description "Available on Chrome Web Store")
 
-1. Download [easy-envato-master.zip](https://github.com/UnitedOver/easy-envato/archive/master.zip "easy-envato-master.zip")
-2. Extract Files
-3. Open Extension Manager in browser
-4. Click on Load Unpacked
-5. Select the easy-envato-master folder in which files for extension are present
-
-Thats it. 👏🏻
+[https://chrome.google.com/webstore/detail/easy-envato/hnchmgnmhafhgdkcinjjgkdgeehnadoe](https://chrome.google.com/webstore/detail/easy-envato/hnchmgnmhafhgdkcinjjgkdgeehnadoe?utm_source=github&utm_medium=description&utm_campaign=github_description "https://chrome.google.com/webstore/detail/easy-envato/hnchmgnmhafhgdkcinjjgkdgeehnadoe")
 
 ## How to set up?
 1. Go to https://build.envato.com/ and log in to you envato account
@@ -43,8 +40,17 @@ Thats it. 👏🏻
 
 Thats it. 👏🏻
 
-## Browser Support
-Supports all major browsers with Chrome extensions support, including Edge, Opera, Google Chrome.
+## How to use the extension from GitHub
+Even though the extension is same on both chrome store and Github, but if for any reason you would like to use it from here then just follow the below steps
+
+1. Download [easy-envato-master.zip](https://github.com/UnitedOver/easy-envato/archive/master.zip "easy-envato-master.zip")
+2. Extract Files
+3. Open Extension Manager in browser
+4. Click on Load Unpacked
+5. Select the easy-envato-master folder in which files for extension are present
+
+Thats it. 👏🏻
+
 
 ## Contributing
 We welcome all contributors, from casual to regular ❤
