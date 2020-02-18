@@ -6,6 +6,7 @@ let currentCode = 0;
 let current_icon = 'default';
 
 document.addEventListener("mouseup", function (e) {
+
     var selection = getSelectionText();
 
     if (!selection.length) {
@@ -13,10 +14,12 @@ document.addEventListener("mouseup", function (e) {
         return;
     }
 
-    var purchase_code_pattern = /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/;
+    var purchase_code_pattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
 
+    selection = selection.trim();
+
+    var length = selection.length;
     if (!purchase_code_pattern.test(selection)) {
-        var length = selection.length;
         if (length > 26 && length < 40) {
             setInvalidIcon();
         }
@@ -25,7 +28,6 @@ document.addEventListener("mouseup", function (e) {
 
     if (currentCode == selection) return;
 
-    selection = selection.replace(/(\r\n|\n|\r)/gm, "");
     currentCode = selection;
     checkPurchaseCode(currentCode);
 
@@ -62,17 +64,30 @@ function setIcon(icon) {
 }
 
 document.addEventListener("mousedown", function (e) {
+    removeCard();
+
+    var selection = getSelectionText();
+
+    if (selection.length) {
+        return;
+    }
+
     if (e.target.classList.contains('purchase-copy')) {
         e.preventDefault();
         copyText(e.target);
         return;
     }
-    if (cardElem != null) {
-        cardElem.remove();
-    }
+
     currentCode = 0;
     setDefaultIcon();
 });
+
+function removeCard() {
+    if (cardElem != null) {
+        cardElem.remove();
+        cardElem = null;
+    }
+}
 
 function copyText(elemToCopy) {
     if (elemToCopy.getAttribute('data-copied') === 1) return;
@@ -117,6 +132,8 @@ function updatePurchaseDetails(details) {
 }
 
 function updatePurchaseInfoCard(details) {
+    removeCard();
+
     var card = document.createElement('div');
     card.setAttribute("id", "purchase-details-card");
 
@@ -203,15 +220,15 @@ function processPurchaseCode(token, code) {
     xhr.open('GET', encodeURI('https://api.envato.com/v3/market/author/sale?code=' + code), true);
     xhr.setRequestHeader("Authorization", "Bearer " + token);
     xhr.onreadystatechange = function (e) {
-        if (xhr.readyState === 4) {
+        if (this.readyState === 4) {
 
-            var response = JSON.parse(xhr.responseText);
-            if (xhr.status === 200) {
+            var response = JSON.parse(this.responseText);
+            if (this.status === 200) {
                 updatePurchaseDetails(parseResponse(response, code));
             } else {
                 var details = {};
 
-                if (xhr.status === 404) {
+                if (this.status === 404) {
                     details['error'] = "Invalid Purchase Code";
                 } else {
 

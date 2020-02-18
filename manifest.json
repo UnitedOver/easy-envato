@@ -1,6 +1,6 @@
 {
   "name": "Easy Envato",
-  "version": "1.0",
+  "version": "1.1",
   "description": "Verify Envato purchase code with just a selection",
   "permissions": [
     "http://*/*",
