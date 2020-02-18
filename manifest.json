@@ -5,8 +5,6 @@
   "permissions": [
     "http://*/*",
     "https://*/*",
-    "activeTab",
-    "tabs",
     "storage",
     "clipboardWrite"
   ],
