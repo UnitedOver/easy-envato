@@ -64,17 +64,18 @@ function setIcon(icon) {
 }
 
 document.addEventListener("mousedown", function (e) {
+
+    if (e.target.classList.contains('purchase-copy')) {
+        e.preventDefault();
+        copyText(e.target);
+        return;
+    }
+
     removeCard();
 
     var selection = getSelectionText();
 
     if (selection.length) {
-        return;
-    }
-
-    if (e.target.classList.contains('purchase-copy')) {
-        e.preventDefault();
-        copyText(e.target);
         return;
     }
 
@@ -166,7 +167,7 @@ function updatePurchaseInfoCard(details) {
 
         item_info.innerHTML += '<div class="purchase-clear"></div>';
 
-        item_info.innerHTML += '<div class="purchased-item-buyer truncate purchase-font-italic"><span class="font-color-secondary">' + details.buyer + '</span></div>';
+        item_info.innerHTML += '<div class="purchased-item-buyer truncate"><span class="font-color-secondary purchase-copy purchase-font-italic">' + details.buyer + '</span>'+ ' | <span class="font-color-secondary purchase-font-italic">' + details.license + '</span></div>';
 
         item_info.innerHTML += '<div class="purchased-item-sold_at"><span class="font-color-secondary">Purchase: </span><span class="font-color-primary purchase-copy">' + formatDate(details.sold_at) + '</span></div>';
 
@@ -255,6 +256,9 @@ function parseResponse(response, code) {
     purchase_details['buyer'] = response.buyer;
     purchase_details['sold_at'] = response.sold_at;
     purchase_details['support_until'] = response.supported_until;
+    purchase_details['license'] = response.license;
+
+
 
     return purchase_details;
 }
