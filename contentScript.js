@@ -55,12 +55,10 @@ function setIcon(icon) {
         return;
     }
     current_icon = icon;
-    if (typeof chrome.app.isInstalled !== 'undefined') {
-        chrome.runtime.sendMessage({
-            action: 'updateIcon',
-            icon: icon
-        });
-    }
+    chrome.runtime.sendMessage({
+        action: 'updateIcon',
+        icon: icon
+    });
 }
 
 document.addEventListener("mousedown", function (e) {
@@ -167,7 +165,7 @@ function updatePurchaseInfoCard(details) {
 
         item_info.innerHTML += '<div class="purchase-clear"></div>';
 
-        item_info.innerHTML += '<div class="purchased-item-buyer truncate"><span class="font-color-secondary purchase-copy purchase-font-italic">' + details.buyer + '</span>'+ ' | <span class="font-color-secondary purchase-font-italic">' + details.license + '</span></div>';
+        item_info.innerHTML += '<div class="purchased-item-buyer truncate"><span class="font-color-secondary purchase-copy purchase-font-italic">' + details.buyer + '</span>' + ' | <span class="font-color-secondary purchase-font-italic">' + details.license + '</span></div>';
 
         item_info.innerHTML += '<div class="purchased-item-sold_at"><span class="font-color-secondary">Purchase: </span><span class="font-color-primary purchase-copy">' + formatDate(details.sold_at) + '</span></div>';
 
@@ -205,12 +203,12 @@ function checkPurchaseCode(code) {
 
     chrome.storage.local.get('data', function (data) {
 
-        if (data.data == undefined) return;
+        if (data.data === undefined) return;
 
         var token = data.data.token;
         show_details = data.data.show_details;
 
-        if (token == undefined) return;
+        if (token === undefined) return;
 
         processPurchaseCode(token, code);
     });
@@ -257,7 +255,6 @@ function parseResponse(response, code) {
     purchase_details['sold_at'] = response.sold_at;
     purchase_details['support_until'] = response.supported_until;
     purchase_details['license'] = response.license;
-
 
 
     return purchase_details;

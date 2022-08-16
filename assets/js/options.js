@@ -17,13 +17,14 @@ update_details.addEventListener('click', function (e) {
     data["show_details"] = enable;
 
     chrome.storage.local.set({'data': data});
+    alert("Settings Saved!");
 
 });
 
 chrome.storage.local.get('data', function (data) {
     var token, show_details;
 
-    if (data.data == undefined) {
+    if (data.data === undefined) {
         show_details = 1;
     } else {
         token = data.data.token;
@@ -33,7 +34,7 @@ chrome.storage.local.get('data', function (data) {
     if (show_details == 1)
         document.forms["configure"]["show_details"].checked = true;
 
-    if (token == undefined)
+    if (token === undefined)
         return;
 
     token_field.value = token;
