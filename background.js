@@ -1,10 +1,18 @@
 'use strict';
 
 const SALE_CHECK_DURATION_IN_MINS = 5;
-chrome.alarms.create("check_new_sale", {
-    delayInMinutes: SALE_CHECK_DURATION_IN_MINS,
-    periodInMinutes: SALE_CHECK_DURATION_IN_MINS
+
+chrome.runtime.onInstalled.addListener(() => {
+    chrome.alarms.get('check_new_sale', function (alarm) {
+        if (!alarm) {
+            chrome.alarms.create("check_new_sale", {
+                delayInMinutes: SALE_CHECK_DURATION_IN_MINS,
+                periodInMinutes: SALE_CHECK_DURATION_IN_MINS
+            });
+        }
+    });
 });
+
 
 chrome.alarms.onAlarm.addListener(function (alarm) {
     if (alarm.name === "check_new_sale") {
@@ -35,39 +43,39 @@ function trigger_check_new_sale() {
     });
 }
 
-function check_new_sale(token) {
+async function check_new_sale(token) {
     var url = 'https://api.envato.com/v3/market/author/sales?page=1';
     var timer_start_date = new Date();
     timer_start_date.setMinutes(timer_start_date.getMinutes() - SALE_CHECK_DURATION_IN_MINS);
 
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', url, true);
-    xhr.setRequestHeader("Authorization", "Bearer " + token);
-    xhr.onreadystatechange = function (e) {
-        if (this.readyState === 4) {
-
-            var response = JSON.parse(this.responseText);
-            if (this.status === 200) {
-                var data = []
-                for (var i in response) {
-                    var item_data = response[i];
-                    var sold_date = new Date(item_data['sold_at']);
-                    if (sold_date < timer_start_date) {
-                        break;
-                    }
-                    data.push(parseItem(item_data));
-                }
-                process_sale_data(data);
+    try {
+        let fetch_endpoint = await fetch(url, {
+            headers: {
+                'Authorization': "Bearer " + token
             }
+        });
+        if (fetch_endpoint.status === 200) {
+            const response = await fetch_endpoint.json();
+            var data = []
+            for (var i in response) {
+                var item_data = response[i];
+                var sold_date = new Date(item_data['sold_at']);
+                if (sold_date < timer_start_date) {
+                    break;
+                }
+                data.push(parseItem(item_data));
+            }
+            process_sale_data(data);
         }
-    };
-    xhr.send();
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 function process_sale_data(data) {
-    for(var i in data) {
+    for (var i in data) {
         var details = data[i]
-        chrome.notifications.create(details['sold_at'], {
+        chrome.notifications.create(details['id'] + '_' + details['sold_at'], {
             type: 'basic',
             iconUrl: details['icon'],
             title: 'New Sale',

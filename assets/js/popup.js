@@ -33,6 +33,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     async function start_init() {
         api_data = await get_storage_data('_temp_data');
+
         if (!api_data) {
             api_data = {};
             box.classList.add('loading');
@@ -64,6 +65,7 @@ document.addEventListener('DOMContentLoaded', function () {
             setRefreshing(false);
             return true;
         } catch (e) {
+
             if (e.status === 401) {
                 invalid_token();
             }
@@ -449,47 +451,40 @@ document.addEventListener('DOMContentLoaded', function () {
         return data;
     }
 
-    function get_csv_data(endpoint) {
-        return new Promise(function (resolve, reject) {
-            let xhr = new XMLHttpRequest();
-            xhr.open('GET', endpoint, true);
-            xhr.onreadystatechange = function (e) {
-                if (this.readyState === 4) {
-                    var response = this.responseText;
-                    if (this.status === 200) {
-                        resolve(response);
-                    } else {
-                        reject({
-                            status: this.status
-                        });
-                    }
-                }
-            };
-            xhr.send();
+    async function get_csv_data(endpoint) {
+        let fetch_endpoint = await fetch(endpoint, {
+            headers: {
+                'Authorization': "Bearer " + token
+            }
         });
+
+        if (fetch_endpoint.status === 200) {
+            return await fetch_endpoint.text();
+        } else {
+            throw new RestException(fetch_endpoint.status);
+        }
     }
 
-    function send_request(endpoint) {
-        return new Promise(function (resolve, reject) {
-            let xhr = new XMLHttpRequest();
-            xhr.open('GET', endpoint, true);
-            xhr.setRequestHeader("Authorization", "Bearer " + token);
-            xhr.onreadystatechange = function (e) {
-                if (this.readyState === 4) {
-
-                    var response = JSON.parse(this.responseText);
-                    if (this.status === 200) {
-                        resolve(response);
-                    } else {
-                        reject({
-                            status: this.status
-                        });
-                    }
-                }
-            };
-            xhr.send();
+    async function send_request(endpoint) {
+        let fetch_endpoint = await fetch(endpoint, {
+            headers: {
+                'Authorization': "Bearer " + token
+            }
         });
+        if (fetch_endpoint.status === 200) {
+            return await fetch_endpoint.json();
+        } else {
+            throw new RestException(fetch_endpoint.status);
+        }
     }
+
+    function RestException(status){
+        let error = new Error("Endpoint Error");
+        error.status = status;
+        return error;
+    }
+
+    RestException.prototype = Object.create(Error.prototype);
 
     function parse_item_details(response) {
         var item = response.item;
@@ -567,7 +562,7 @@ document.addEventListener('DOMContentLoaded', function () {
             duration = minutes
             duration_type = 'min'
         } else {
-            return 'few seconds ago';
+            return 'just now';
         }
         duration = Math.round(duration)
         if (duration > 1) {
