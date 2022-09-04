@@ -291,7 +291,9 @@ document.addEventListener('DOMContentLoaded', function () {
         for (var e = 0; e < envato_total_sales.length; e++) {
             var envato_details = envato_total_sales[e];
             var envato_date_string = envato_details['Date'];
-            var envato_sale_total_sales = Number(envato_details['Total Sales']);
+            var total_sales_string = envato_details['Total Sales'];
+            total_sales_string = total_sales_string.replace(/\D/g, '');
+            var envato_sale_total_sales = Number(total_sales_string);
             var envato_sale_date = new Date(envato_date_string);
             var formatted_envato_sale_date = format_date(envato_sale_date);
             if (formatted_envato_sale_date in envato_date_series) {
@@ -434,24 +436,29 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     function parse_csv_data(csv_data) {
+        const valuesRegExp = /"([^"]*(?:""[^"]*)*)"|([^",]+)/g;
         const csv_array = csv_data.toString().split(/\r?\n|\r|\n/g);
         const data = [];
         const headers = csv_array[0].split(",");
         for (let i = 1; i < csv_array.length - 1; i++) {
-            var row = csv_array[i].split(",");
             var json = {};
+            let matches;
+            var j = 0;
+            while (matches = valuesRegExp.exec(csv_array[i])) {
+                var value = matches[1] || matches[2];
+                value = value.replace(/""/g, "\"");
+                var title = headers[j];
 
-            for (let r = 0; r < row.length; r++) {
-                var title = headers[r];
                 if (!title) {
                     continue;
                 }
                 title = title.trim();
-                json[title] = row[r];
+                json[title] = value;
+                j++;
             }
+
             data.push(json);
         }
-
         return data;
     }
 
