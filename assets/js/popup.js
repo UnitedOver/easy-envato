@@ -292,7 +292,9 @@ document.addEventListener('DOMContentLoaded', function () {
             var envato_details = envato_total_sales[e];
             var envato_date_string = envato_details['Date'];
             var total_sales_string = envato_details['Total Sales'];
-            total_sales_string = total_sales_string.replace(/\D/g, '');
+            if(total_sales_string) {
+                total_sales_string = total_sales_string.replace(/\D/g, '');
+            }
             var envato_sale_total_sales = Number(total_sales_string);
             var envato_sale_date = new Date(envato_date_string);
             var formatted_envato_sale_date = format_date(envato_sale_date);
