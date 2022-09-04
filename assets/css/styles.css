@@ -138,11 +138,12 @@ html {
 }
 
 .last_few_sales_list li .sale_item_info_body {
-    display: flex;
-    flex-direction: row;
     color: var(--secondary-text-color);
     align-items: center;
-    gap: 6px;
+}
+
+.last_few_sales_list li .sale_item_info_body > span {
+    margin-right: 6px;
 }
 
 .last_few_sales_list li .sale_item_title {
@@ -150,6 +151,9 @@ html {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    display: inline-block;
+    top: 4px;
+    position: relative;
 }
 
 .last_few_month_sales {

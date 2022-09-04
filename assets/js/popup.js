@@ -150,10 +150,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 var list_item_body = document.createElement('div');
                 list_item_body.setAttribute('class', 'sale_item_info_body');
 
-                var list_item_title = document.createElement('div');
+                var list_item_title = document.createElement('span');
                 list_item_title.setAttribute('class', 'sale_item_title');
-                var list_item_title_suffix = document.createElement('div');
-                var list_item_purchase_duration = document.createElement('div');
+                var list_item_title_suffix = document.createElement('span');
+                var list_item_purchase_duration = document.createElement('span');
                 list_item_purchase_duration.setAttribute('class', 'font_600');
                 list_item_title.innerText = item_details['name'];
                 list_item_title_suffix.innerText = title_suffix;
@@ -437,12 +437,16 @@ document.addEventListener('DOMContentLoaded', function () {
         const csv_array = csv_data.toString().split(/\r?\n|\r|\n/g);
         const data = [];
         const headers = csv_array[0].split(",");
-
         for (let i = 1; i < csv_array.length - 1; i++) {
             var row = csv_array[i].split(",");
             var json = {};
+
             for (let r = 0; r < row.length; r++) {
-                var title = headers[r].trim();
+                var title = headers[r];
+                if (!title) {
+                    continue;
+                }
+                title = title.trim();
                 json[title] = row[r];
             }
             data.push(json);
@@ -478,7 +482,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    function RestException(status){
+    function RestException(status) {
         let error = new Error("Endpoint Error");
         error.status = status;
         return error;
