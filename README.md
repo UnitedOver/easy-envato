@@ -1,11 +1,13 @@
 ![GitHub](https://img.shields.io/github/license/UnitedOver/easy-envato)  ![PullRequest](https://img.shields.io/badge/PRs-welcome-brightgreen)
  # Easy Envato ⚡ 
 
-Chrome (Chromium) Browser extension to check verify purchase of your product listed on Envato Marketplace including [ThemeForest](https://themeforest.net/ "ThemeForest"), [CodeCanyon](https://codecanyon.net/ "CodeCanyon"),  [VideoHive](https://videohive.net/ "VideoHive"),  [AudioJungle](https://audiojungle.net/ "AudioJungle"), [GraphicRiver](https://graphicriver.net/ "GraphicRiver"), [PhotoDune](https://photodune.net/ "PhotoDune"), [3DOcean](https://3docean.net/ "3DOcean")
+Chrome (Chromium) Browser extension to get a glimpse of your Envato sales and verify purchase code of your product listed on Envato Marketplace including [ThemeForest](https://themeforest.net/ "ThemeForest"), [CodeCanyon](https://codecanyon.net/ "CodeCanyon"),  [VideoHive](https://videohive.net/ "VideoHive"),  [AudioJungle](https://audiojungle.net/ "AudioJungle"), [GraphicRiver](https://graphicriver.net/ "GraphicRiver"), [PhotoDune](https://photodune.net/ "PhotoDune"), [3DOcean](https://3docean.net/ "3DOcean")
 
-## How does it work?
+![](description-images/widget.png)
 
-Using it is literally nothing but just selecting your purchase code in the browser and you will be shown with the details.
+## How to check purchase code?
+
+Checking the purchae code is literally nothing but just selecting your purchase code in the browser and you will be shown with the details.
 
 The extension icon is color coded and will change its color as per the status of purchase code
 
@@ -33,7 +35,10 @@ Supports all major browsers with Chrome extensions support, including Edge, Oper
 1. Go to https://build.envato.com/ and log in to you envato account
 2. Click on My Apps from the Menu
 3. Sroll to the bottom of the page and click on "Create a New Token" button
-4. Give your token a name and give "View your items' sales history" permission
+4. Give your token a name and give the below mentioned permissions
+ --> View the user's Envato Account username (View your Envato Account username)
+ --> View the user's items' sales history *(View your items' sales history)*
+ --> View the user's statement transactions *(View your statement transactions)*
 5. Copy the token (you will not be able to see this token again if you miss it)
 6. Go to Extension Options from Manage Extension Page -> Details
 7. Paste the Token in Envato Token field.
