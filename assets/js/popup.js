@@ -33,7 +33,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     async function start_init() {
         api_data = await get_storage_data('_temp_data');
-
         if (!api_data) {
             api_data = {};
             box.classList.add('loading');
@@ -130,9 +129,16 @@ document.addEventListener('DOMContentLoaded', function () {
             let title_suffix = 'was purchased';
             var list_wrapper = document.getElementById('last_few_sales_list');
             list_wrapper.innerHTML = '';
-            for (var i = 0; i < Math.min(SHOW_LAST_N_SALE_LIST, sales_data_length); i++) {
-
+            var j = 0;
+            for (var i = 0; i < sales_data_length; i++) {
+                if (j === SHOW_LAST_N_SALE_LIST) {
+                    break;
+                }
                 let item_details = parse_item_details(sales_data[i]);
+
+                if (!item_details.license) {
+                    continue;
+                }
                 sales_data[i] = item_details;
                 var list_item = document.createElement('li');
                 list_item.setAttribute('class', 'sale_item_info');
@@ -167,6 +173,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 list_item_wrapper.append(list_item_body);
                 list_item.appendChild(list_item_wrapper);
                 list_wrapper.appendChild(list_item);
+                j++;
             }
 
         }
@@ -262,6 +269,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 var results_length = results.length;
 
                 total_sales = total_sales.concat(results);
+
                 if (results_length === page_size) {
                     page++;
                 } else {
@@ -280,6 +288,10 @@ document.addEventListener('DOMContentLoaded', function () {
         let sale_date_series = Object.assign({}, date_series);
         for (var i = 0; i < total_sales.length; i++) {
             var sale_details = total_sales[i];
+            var name = sale_details['detail'];
+            if (!name.includes('Regular')) {
+                continue
+            }
             var sale_date = sale_details['date'].split(' ')[0];
             if (sale_date in sale_date_series) {
                 sale_date_series[sale_date] += 1;
@@ -292,7 +304,7 @@ document.addEventListener('DOMContentLoaded', function () {
             var envato_details = envato_total_sales[e];
             var envato_date_string = envato_details['Date'];
             var total_sales_string = envato_details['Total Sales'];
-            if(total_sales_string) {
+            if (total_sales_string) {
                 total_sales_string = total_sales_string.replace(/\D/g, '');
             }
             var envato_sale_total_sales = Number(total_sales_string);
@@ -310,9 +322,24 @@ document.addEventListener('DOMContentLoaded', function () {
         create_graphs(envato_date_series, sale_date_series);
     }
 
+    function sort_data(list) {
+        let ordered_list = {};
+        Object.keys(list).sort(function (a, b) {
+            return a.split('/').reverse().join('').localeCompare(b.split('/').reverse().join(''));
+        }).forEach(function (key) {
+            ordered_list[key] = list[key];
+        })
+        return ordered_list;
+    }
+
     function create_graphs(envato_trend, item_sales) {
 
         let trend_line = document.getElementById('trend_line');
+
+        trend_line.innerHTML = '';
+
+        envato_trend = sort_data(envato_trend);
+        item_sales = sort_data(item_sales);
 
         let xOffset = 0;
         let options = {
