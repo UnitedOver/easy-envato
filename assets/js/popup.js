@@ -344,7 +344,7 @@ document.addEventListener('DOMContentLoaded', function () {
         let xOffset = 0;
         let options = {
             chart: {
-                height: Math.max(174, trend_line.offsetHeight),
+                height: Math.max(150, trend_line.offsetHeight),
                 width: Math.max(485, trend_line.offsetWidth + xOffset),
                 type: "area",
                 toolbar: {

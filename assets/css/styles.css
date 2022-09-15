@@ -30,7 +30,7 @@ html {
 }
 
 .header_contents {
-    padding: 24px;
+    padding: 24px 24px 0;
 }
 
 .flex_center {
