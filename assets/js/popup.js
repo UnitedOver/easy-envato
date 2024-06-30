@@ -16,17 +16,28 @@ document.addEventListener('DOMContentLoaded', function () {
 
     chrome.storage.local.get('data', function (data) {
 
-        if (data.data === undefined) return;
+        if (data && data.data === undefined) {
+            open_options_page();
+            return;
+        }
 
         token = data.data.token;
 
-        if (token === undefined) return;
+        if (token === undefined) {
+            open_options_page();
+            return;
+        }
         start_init()
     });
+
+    function open_options_page() {
+        chrome.runtime.openOptionsPage()
+    }
 
     const AUTO_UPDATE_TIME_IN_SEC = 300;
     const box = document.getElementById("box");
     const head = document.getElementById("head");
+    const error_message = document.getElementById("error_message");
     let api_data = {};
     let update_temp_data = false;
     let refresh_status = document.getElementById('refresh_data');
@@ -65,8 +76,12 @@ document.addEventListener('DOMContentLoaded', function () {
             return true;
         } catch (e) {
 
-            if (e.status === 401) {
-                invalid_token();
+            let status = e.status;
+
+            if(e.response && e.response.error) {
+                invalid_token(e.response.error);
+            }else if (status === 401) {
+                invalid_token('Please enter a valid Envato Token');
             }
             console.log(e);
         }
@@ -454,8 +469,9 @@ document.addEventListener('DOMContentLoaded', function () {
         chart.render();
     }
 
-    function invalid_token() {
+    function invalid_token(message) {
         box.classList.add('show-invalid_token');
+        error_message.innerText = message
     }
 
     async function get_envato_data() {
@@ -501,7 +517,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (fetch_endpoint.status === 200) {
             return await fetch_endpoint.text();
         } else {
-            throw new RestException(fetch_endpoint.status);
+            throw new RestException(fetch_endpoint.status, false);
         }
     }
 
@@ -511,16 +527,18 @@ document.addEventListener('DOMContentLoaded', function () {
                 'Authorization': "Bearer " + token
             }
         });
+        let result = await fetch_endpoint.json();
         if (fetch_endpoint.status === 200) {
-            return await fetch_endpoint.json();
+            return result;
         } else {
-            throw new RestException(fetch_endpoint.status);
+            throw new RestException(fetch_endpoint.status, result);
         }
     }
 
-    function RestException(status) {
+    function RestException(status, response) {
         let error = new Error("Endpoint Error");
         error.status = status;
+        error.response = response;
         return error;
     }
 
@@ -627,6 +645,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             });
         });
-    };
+    }
 
 }, false);

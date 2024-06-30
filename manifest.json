@@ -1,6 +1,6 @@
 {
   "name": "Easy Envato",
-  "version": "2.1",
+  "version": "2.2",
   "description": "Get a glimpse of Envato sales data and verify purchase code with just a selection",
   "permissions": [
     "storage",

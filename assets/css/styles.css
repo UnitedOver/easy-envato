@@ -63,6 +63,9 @@ html {
 .show-invalid_token .invalid_token {
     display: flex;
     flex: 1;
+    text-wrap: balance;
+    text-align: center;
+    font-size: 14px;
 }
 
 .head {
